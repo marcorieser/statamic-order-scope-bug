@@ -1,0 +1,12 @@
+title: Tours
+template: default
+layout: layout
+revisions: false
+slugs: false
+date: true
+sort_dir: desc
+preview_targets:
+  -
+    label: Entry
+    url: '{permalink}'
+    refresh: true

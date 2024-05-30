@@ -1,0 +1,33 @@
+<div class="flex flex-col gap-4">
+
+    <div>
+        <h2 class="font-bold">Tours by date asc, title desc (collection tag with sort)</h2>
+        {{ _tours_regular = {collection:tours sort="date:asc|title:desc"} }}
+        <ul>
+            {{ _tours_regular }}
+                <li>{{ title }} ({{ date }})</li>
+            {{ /_tours_regular }}
+        </ul>
+    </div>
+
+    <div>
+        <h2 class="font-bold">Tours by date asc, title desc (custom tag with integrated sorting)</h2>
+        {{ _tours_ct = {sorted_tours} }}
+        <ul>
+            {{ _tours_ct }}
+            <li>{{ title }} ({{ date }})</li>
+            {{ /_tours_ct }}
+        </ul>
+    </div>
+
+    <div>
+        <h2 class="font-bold">Tours by date asc, title desc (collection tag with query_scope)</h2>
+        {{ _tours_qs = {collection:tours query_scope="sorted_tours" } }}
+        <ul>
+            {{ _tours_qs }}
+                <li>{{ title }} ({{ date }})</li>
+            {{ /_tours_qs }}
+        </ul>
+    </div>
+
+</div>

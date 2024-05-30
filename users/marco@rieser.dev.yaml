@@ -1,0 +1,8 @@
+name: Marco
+super: true
+id: 27ab77c2-a033-4811-8e67-29780fab9401
+password_hash: $2y$12$MPzAr1YxjgwuMmCUa0DFteWR.HZSKrkxLH1ODu04n3DZgMyHB7cx2
+preferences:
+  collections:
+    tours:
+      after_save: create_another
