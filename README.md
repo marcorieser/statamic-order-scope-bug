@@ -1,40 +1,22 @@
-<p align="center"><img src="https://statamic.com/assets/branding/Statamic-Logo+Wordmark-Rad.svg" width="400" alt="Statamic Logo" /></p>
+# Statamic v5 Query Scope Issue
+## Things to know
+- This is a plain v5 Statamic site in pro mode
+- There is a collection `tours` with `date` enabled
+- The query logic is extracted to a trait to make sure the query scope and the custom tag use the exact same logic
+- The `default.antlers.html` view lists the tours sorted by `date` (ascending) and `title` (descending) in three ways:
+  - via the collection tag with `sort` parameter (works correctly ✅)
+  - via a custom tag which queries the entries via `Collection` facade (works correctly ✅)
+  - via the collection tag with the `query_scope` parameter (`date` part does not work ❌)
 
-## About Statamic
+## Queries executed
+### collection tag with sort
+`select * from entries where collection in ('tours') and published = '1' and redirect is null order by date asc, title desc`
 
-Statamic is the flat-first, Laravel + Git powered CMS designed for building beautiful, easy to manage websites.
+### custom tag with integrated sorting
+`select * from entries where collection in ('tours') order by date asc, title desc`
 
-> **Note:** This repository contains the code for the Statamic application. To contribute to the core package, visit the [Statamic core package repository][cms-repo].
+### collection tag with `query_scope`
+`select * from entries where collection in ('tours') and published = '1' and redirect is null order by date asc, title desc, date desc`
 
-
-## Learning Statamic
-
-Statamic has extensive [documentation][docs]. We dedicate a significant amount of time and energy every day to improving them, so if something is unclear, feel free to open issues for anything you find confusing or incomplete. We are happy to consider anything you feel will make the docs and CMS better.
-
-## Support
-
-We provide official developer support on [Statamic Pro](https://statamic.com/pricing) projects. Community-driven support is available on the [forum](https://statamic.com/forum) and in [Discord][discord].
-
-
-## Contributing
-
-Thank you for considering contributing to Statamic! We simply ask that you review the [contribution guide][contribution] before you open issues or send pull requests.
-
-
-## Code of Conduct
-
-In order to ensure that the Statamic community is welcoming to all and generally a rad place to belong, please review and abide by the [Code of Conduct](https://github.com/statamic/cms/wiki/Code-of-Conduct).
-
-
-## Important Links
-
-- [Statamic Main Site](https://statamic.com)
-- [Statamic Documentation][docs]
-- [Statamic Core Package Repo][cms-repo]
-- [Statamic Migrator](https://github.com/statamic/migrator)
-- [Statamic Discord][discord]
-
-[docs]: https://statamic.dev/
-[discord]: https://statamic.com/discord
-[contribution]: https://github.com/statamic/cms/blob/master/CONTRIBUTING.md
-[cms-repo]: https://github.com/statamic/cms
+> [!CAUTION]
+> Seems like the default `date` sorting gets applied to the end
